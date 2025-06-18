@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import "./CreatePost.css";
 import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [title, setTitle] = useState();
   const [postText, setPostText] = useState();
+
+  const navigate = useNavigate();
 
   const createPost = async () => {
     await addDoc(collection(db, "posts"), {
@@ -16,6 +19,8 @@ const CreatePost = () => {
         id: auth.currentUser.uid,
       },
     });
+
+    navigate("/");
   };
 
   return (
